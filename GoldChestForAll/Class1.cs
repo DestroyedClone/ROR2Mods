@@ -32,13 +32,15 @@ namespace GoldChestForAll
 
         private void MultiplyChestCost(On.RoR2.PurchaseInteraction.orig_Awake orig, PurchaseInteraction self)
         {
-            var chest = self.GetComponent<ChestBehavior>();
-
-            if (chest && chest.tier3Chance == 1f)
+            if (NetworkServer.active)
             {
-                var ResultAmt = (int)Mathf.Ceil(self.cost * CostMultiplier.Value);
-                self.cost = ResultAmt;
-                self.Networkcost = ResultAmt;
+                var chest = self.GetComponent<ChestBehavior>();
+
+                if (chest && chest.tier3Chance == 1f)
+                {
+                    var ResultAmt = (int)Mathf.Ceil(self.cost * CostMultiplier.Value);
+                    self.Networkcost = ResultAmt;
+                }
             }
             orig(self);
         }
