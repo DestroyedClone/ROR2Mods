@@ -16,15 +16,17 @@ namespace GoldChestForAll
     [BepInPlugin("com.DestroyedClone.GoldChestForAll", "GoldChestForAll", "1.0.0")]
     public class GCFAPlugin : BaseUnityPlugin
     {
-        public static ConfigEntry<float> CostMultiplier { get; set; }
+        public static ConfigEntry<float>? cfgCostMultiplier { get; set; }
 
         public void Awake()
         {
-            CostMultiplier = Config.Bind("Default", "Gold Chest Cost Multiplier", 1.00f, "Multiply the costs of gold chests. Intended for balance, but you can just set it to '1' if you want it unchanged.");
+            cfgCostMultiplier = Config.Bind("Default", "Gold Chest Cost Multiplier", 1.00f, "Multiply the costs of gold chests. Intended for balance, but you can just set it to '1' if you want it unchanged.");
+
+
 
             On.RoR2.ChestBehavior.ItemDrop += DuplicateDrops;
 
-            if (CostMultiplier.Value != 1f)
+            if (cfgCostMultiplier.Value != 1f)
             {
                 On.RoR2.PurchaseInteraction.Awake += MultiplyChestCost;
             }
@@ -38,7 +40,7 @@ namespace GoldChestForAll
 
                 if (chest && chest.tier3Chance == 1f)
                 {
-                    var ResultAmt = (int)Mathf.Ceil(self.cost * CostMultiplier.Value);
+                    var ResultAmt = (int)Mathf.Ceil(self.cost * cfgCostMultiplier.Value);
                     self.Networkcost = ResultAmt;
                 }
             }
