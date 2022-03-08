@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using BepInEx;
-using On.RoR2;
 using R2API;
 using R2API.Utils;
 using RoR2;
 using UnityEngine;
 
+[assembly: HG.Reflection.SearchableAttribute.OptIn]
 namespace ArtiThiccer
 {
 	[R2APISubmoduleDependency(new string[]
@@ -19,7 +19,6 @@ namespace ArtiThiccer
 	[NetworkCompatibility(CompatibilityLevel.NoNeedForSync, VersionStrictness.EveryoneNeedSameModVersion)]
 	[BepInDependency("com.bepis.r2api", BepInDependency.DependencyFlags.SoftDependency)]
 	[BepInPlugin("com.Fuck.ArtiThiccer", "ArtiThiccer", "1.0.0")]
-	[assembly: HG.Reflection.SearchableAttribute.OptIn]
 	public class ArtiThiccerPlugin : BaseUnityPlugin
 	{
 		private void Awake()
@@ -28,7 +27,6 @@ namespace ArtiThiccer
 			{
 				ArtiThiccerPlugin.assetBundle = AssetBundle.LoadFromStream(manifestResourceStream);
 			}
-			BodyCatalog.Init += new BodyCatalog.hook_Init(this.BodyCatalog_Init);
 			ArtiThiccerPlugin.ReplaceShaders();
 			ArtiThiccerPlugin.AddLanguageTokens();
 		}
@@ -48,7 +46,7 @@ namespace ArtiThiccer
 		private static Material LoadMaterialWithReplacedShader(string materialPath, string shaderName)
 		{
 			Material material = ArtiThiccerPlugin.assetBundle.LoadAsset<Material>(materialPath);
-			material.shader = Shader.Find(shaderName);
+			material.shader = RoR2.LegacyShaderAPI.Find(shaderName);
 			return material;
 		}
 
@@ -81,14 +79,14 @@ namespace ArtiThiccer
 				int num = 0;
 				CharacterModel.RendererInfo rendererInfo = default(CharacterModel.RendererInfo);
 				rendererInfo.defaultMaterial = ArtiThiccerPlugin.assetBundle.LoadAsset<Material>("Assets/Resources/Arti/MatArti.mat");
-				rendererInfo.defaultShadowCastingMode = 1;
+				rendererInfo.defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
 				rendererInfo.ignoreOverlays = false;
 				rendererInfo.renderer = componentsInChildren[7];
 				array[num] = rendererInfo;
 				int num2 = 1;
 				rendererInfo = default(CharacterModel.RendererInfo);
 				rendererInfo.defaultMaterial = ArtiThiccerPlugin.assetBundle.LoadAsset<Material>("Assets/Resources/Arti/MatArti.mat");
-				rendererInfo.defaultShadowCastingMode = 1;
+				rendererInfo.defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
 				rendererInfo.ignoreOverlays = false;
 				rendererInfo.renderer = componentsInChildren[6];
 				array[num2] = rendererInfo;
@@ -110,7 +108,7 @@ namespace ArtiThiccer
 				LoadoutAPI.SkinDefInfo skinDefInfo2 = skinDefInfo;
 				Array.Resize<SkinDef>(ref componentInChildren.skins, componentInChildren.skins.Length + 1);
 				componentInChildren.skins[componentInChildren.skins.Length - 1] = LoadoutAPI.CreateNewSkinDef(skinDefInfo2);
-				Reflection.GetFieldValue<SkinDef[][]>(typeof(BodyCatalog), "skins")[BodyCatalog.FindBodyIndex(gameObject)] = componentInChildren.skins;
+				Reflection.GetFieldValue<SkinDef[][]>(typeof(BodyCatalog), "skins")[(int)BodyCatalog.FindBodyIndex(gameObject)] = componentInChildren.skins;
 			}
 			catch (Exception ex)
 			{
@@ -147,14 +145,14 @@ namespace ArtiThiccer
 				int num = 0;
 				CharacterModel.RendererInfo rendererInfo = default(CharacterModel.RendererInfo);
 				rendererInfo.defaultMaterial = ArtiThiccerPlugin.assetBundle.LoadAsset<Material>("Assets/Resources/Arti/MatArti.mat");
-				rendererInfo.defaultShadowCastingMode = 1;
+				rendererInfo.defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
 				rendererInfo.ignoreOverlays = false;
 				rendererInfo.renderer = componentsInChildren[7];
 				array[num] = rendererInfo;
 				int num2 = 1;
 				rendererInfo = default(CharacterModel.RendererInfo);
 				rendererInfo.defaultMaterial = ArtiThiccerPlugin.assetBundle.LoadAsset<Material>("Assets/Resources/Arti/MatArti.mat");
-				rendererInfo.defaultShadowCastingMode = 1;
+				rendererInfo.defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
 				rendererInfo.ignoreOverlays = false;
 				rendererInfo.renderer = componentsInChildren[6];
 				array[num2] = rendererInfo;
@@ -176,7 +174,7 @@ namespace ArtiThiccer
 				LoadoutAPI.SkinDefInfo skinDefInfo2 = skinDefInfo;
 				Array.Resize<SkinDef>(ref componentInChildren.skins, componentInChildren.skins.Length + 1);
 				componentInChildren.skins[componentInChildren.skins.Length - 1] = LoadoutAPI.CreateNewSkinDef(skinDefInfo2);
-				Reflection.GetFieldValue<SkinDef[][]>(typeof(BodyCatalog), "skins")[BodyCatalog.FindBodyIndex(gameObject)] = componentInChildren.skins;
+				Reflection.GetFieldValue<SkinDef[][]>(typeof(BodyCatalog), "skins")[(int)BodyCatalog.FindBodyIndex(gameObject)] = componentInChildren.skins;
 			}
 			catch (Exception ex)
 			{
