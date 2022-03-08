@@ -19,6 +19,7 @@ namespace ArtiThiccer
 	[NetworkCompatibility(CompatibilityLevel.NoNeedForSync, VersionStrictness.EveryoneNeedSameModVersion)]
 	[BepInDependency("com.bepis.r2api", BepInDependency.DependencyFlags.SoftDependency)]
 	[BepInPlugin("com.Fuck.ArtiThiccer", "ArtiThiccer", "1.0.0")]
+	[assembly: HG.Reflection.SearchableAttribute.OptIn]
 	public class ArtiThiccerPlugin : BaseUnityPlugin
 	{
 		private void Awake()
@@ -31,6 +32,13 @@ namespace ArtiThiccer
 			ArtiThiccerPlugin.ReplaceShaders();
 			ArtiThiccerPlugin.AddLanguageTokens();
 		}
+
+		[RoR2.SystemInitializer(dependencies: typeof(RoR2.BodyCatalog))]
+		private static void AddSkins()
+		{
+			ArtiThiccerPlugin.AddMageBodyArtificerNoCapeSkin();
+			ArtiThiccerPlugin.AddMageBodyArtificerFatSkin();
+        }
 
 		private static void ReplaceShaders()
 		{
@@ -182,13 +190,6 @@ namespace ArtiThiccer
 				}));
 				Debug.LogError(ex);
 			}
-		}
-
-		private void BodyCatalog_Init(BodyCatalog.orig_Init orig)
-		{
-			orig.Invoke();
-			ArtiThiccerPlugin.AddMageBodyArtificerNoCapeSkin();
-			ArtiThiccerPlugin.AddMageBodyArtificerFatSkin();
 		}
 
 		private static AssetBundle assetBundle;
