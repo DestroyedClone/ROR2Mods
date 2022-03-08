@@ -21,6 +21,11 @@ namespace ArtiThiccer
 	[BepInPlugin("com.Fuck.ArtiThiccer", "ArtiThiccer", "1.0.0")]
 	public class ArtiThiccerPlugin : BaseUnityPlugin
 	{
+
+		private static AssetBundle assetBundle;
+
+		private static readonly List<Material> materialsWithRoRShader = new List<Material>();
+
 		private void Awake()
 		{
 			using (Stream manifestResourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("ArtiThiccer.fuckartithiccer"))
@@ -189,9 +194,5 @@ namespace ArtiThiccer
 				Debug.LogError(ex);
 			}
 		}
-
-		private static AssetBundle assetBundle;
-
-		private static readonly List<Material> materialsWithRoRShader = new List<Material>();
 	}
 }
