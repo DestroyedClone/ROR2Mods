@@ -10,11 +10,13 @@
 
 	<ItemGroup>
 	  <Compile Remove="Arthithiccer.cs" />
+	  <Compile Remove="Artithiccer\Arthithiccer.cs" />
+	  <Compile Remove="Artithiccer\Helper.cs" />
 	  <Compile Remove="Helper.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<EmbeddedResource Include="ArtiThiccer.fuckartithiccer" />
+	  <None Remove="Artithiccer\ArtiThiccer.fuckartithiccer" />
 	</ItemGroup>
 
 	<ItemGroup>
