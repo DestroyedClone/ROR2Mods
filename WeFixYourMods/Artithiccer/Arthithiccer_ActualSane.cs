@@ -16,7 +16,7 @@ namespace ArtiThiccer
     })]
     [NetworkCompatibility(CompatibilityLevel.NoNeedForSync, VersionStrictness.EveryoneNeedSameModVersion)]
     [BepInDependency("com.bepis.r2api", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin("com.Fuck.ArtiThiccer", "ArtiThiccer", "1.0.0")]
+    [BepInPlugin("com.Fuck.ArtiThiccer", "ArtiThiccer", "1.0.1")]
     public class ArtiThiccerPlugin : BaseUnityPlugin
     {
         private static readonly List<Material> materialsWithRoRShader = new List<Material>();
