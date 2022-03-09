@@ -23,13 +23,13 @@ namespace ArtiThiccer
 
 		public static PluginInfo PInfo { get; private set; }
 
-		private void Awake()
+		private void Start()
 		{
 			PInfo = Info;
 			Assets.Init();
-			//ArtiThiccerPlugin.ReplaceShaders();
-			//ArtiThiccerPlugin.AddLanguageTokens();
+			ArtiThiccerPlugin.AddLanguageTokens();
 			On.RoR2.BodyCatalog.Init += BodyCatalog_Init;
+			ArtiThiccerPlugin.ReplaceShaders();
 		}
 
 		private void BodyCatalog_Init(On.RoR2.BodyCatalog.orig_Init orig)
@@ -53,7 +53,7 @@ namespace ArtiThiccer
 		private static Material LoadMaterialWithReplacedShader(string materialPath, string shaderName)
 		{
 			Material material = Assets.mainBundle.LoadAsset<Material>(materialPath);
-			material.shader = RoR2.LegacyShaderAPI.Find(shaderName);
+			material.shader = Shader.Find(shaderName);
 			return material;
 		}
 
